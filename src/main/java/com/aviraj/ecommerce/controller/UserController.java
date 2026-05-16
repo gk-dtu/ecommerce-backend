@@ -1,9 +1,9 @@
 package com.aviraj.ecommerce.controller;
 
 import com.aviraj.ecommerce.dto.UserRequestDto;
-//import com.aviraj.ecommerce.entity.User;
 import com.aviraj.ecommerce.dto.UserResponseDto;
 import com.aviraj.ecommerce.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponseDto createUser(@RequestBody UserRequestDto dto) {
+    public UserResponseDto createUser(@Valid @RequestBody UserRequestDto dto) {
         return service.createUser(dto);
     }
 
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto dto) {
+    public UserResponseDto updateUser(@Valid @PathVariable Long id, @RequestBody UserRequestDto dto) {
         return service.updateUser(id, dto);
     }
 
