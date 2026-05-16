@@ -1,6 +1,8 @@
 package com.aviraj.ecommerce.controller;
 
-import com.aviraj.ecommerce.entity.User;
+import com.aviraj.ecommerce.dto.UserRequestDto;
+//import com.aviraj.ecommerce.entity.User;
+import com.aviraj.ecommerce.dto.UserResponseDto;
 import com.aviraj.ecommerce.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,18 +19,18 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return service.createUser(user);
+    public UserResponseDto createUser(@RequestBody UserRequestDto dto) {
+        return service.createUser(dto);
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
         return service.getAllUsers();
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return service.updateUser(id, user);
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto dto) {
+        return service.updateUser(id, dto);
     }
 
     @DeleteMapping("/{id}")
