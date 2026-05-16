@@ -22,4 +22,21 @@ public class UserService {
     public List<User> getAllUsers() {
         return repository.findAll();
     }
+
+    public User updateUser(Long id, User updatedUser) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
+
+        return repository.save(user);
+    }
+
+    public void deleteUser(Long id){
+        User user = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        repository.delete(user);
+    }
 }
