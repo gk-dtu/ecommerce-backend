@@ -3,6 +3,7 @@ package com.aviraj.ecommerce.service;
 import com.aviraj.ecommerce.dto.UserRequestDto;
 import com.aviraj.ecommerce.dto.UserResponseDto;
 import com.aviraj.ecommerce.entity.User;
+import com.aviraj.ecommerce.exception.UserNotFoundException;
 import com.aviraj.ecommerce.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserRequestDto updatedUser) {
         User user = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found, can't update"));
 
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
@@ -44,7 +45,7 @@ public class UserService {
 
     public void deleteUser(Long id){
         User user = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found, can't delete"));
 
         repository.delete(user);
     }
