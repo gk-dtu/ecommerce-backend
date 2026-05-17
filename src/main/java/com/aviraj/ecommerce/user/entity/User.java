@@ -1,4 +1,4 @@
-package com.aviraj.ecommerce.entity;
+package com.aviraj.ecommerce.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

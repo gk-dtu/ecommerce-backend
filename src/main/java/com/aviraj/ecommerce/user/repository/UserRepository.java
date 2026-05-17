@@ -1,6 +1,6 @@
-package com.aviraj.ecommerce.repository;
+package com.aviraj.ecommerce.user.repository;
 
-import com.aviraj.ecommerce.entity.User;
+import com.aviraj.ecommerce.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //DAO(data access object)

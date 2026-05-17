@@ -1,8 +1,8 @@
-package com.aviraj.ecommerce.controller;
+package com.aviraj.ecommerce.user.controller;
 
-import com.aviraj.ecommerce.dto.UserRequestDto;
-import com.aviraj.ecommerce.dto.UserResponseDto;
-import com.aviraj.ecommerce.service.UserService;
+import com.aviraj.ecommerce.user.dto.UserRequestDto;
+import com.aviraj.ecommerce.user.dto.UserResponseDto;
+import com.aviraj.ecommerce.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponseDto updateUser(@Valid @PathVariable Long id, @RequestBody UserRequestDto dto) {
+    public UserResponseDto updateUser(@Valid @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
         return service.updateUser(id, dto);
     }
 

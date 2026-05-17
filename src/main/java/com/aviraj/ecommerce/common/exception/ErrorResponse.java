@@ -1,4 +1,4 @@
-package com.aviraj.ecommerce.exception;
+package com.aviraj.ecommerce.common.exception;
 
 import lombok.Data;
 

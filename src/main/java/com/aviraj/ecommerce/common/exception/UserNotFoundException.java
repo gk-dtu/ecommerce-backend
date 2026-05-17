@@ -1,4 +1,4 @@
-package com.aviraj.ecommerce.exception;
+package com.aviraj.ecommerce.common.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {

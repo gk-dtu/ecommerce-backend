@@ -1,4 +1,4 @@
-package com.aviraj.ecommerce.dto;
+package com.aviraj.ecommerce.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;
