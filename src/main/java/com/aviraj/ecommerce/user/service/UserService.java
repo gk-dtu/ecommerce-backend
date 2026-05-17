@@ -8,7 +8,6 @@ import com.aviraj.ecommerce.user.repository.UserRepository;
 import com.aviraj.ecommerce.user.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,10 +23,10 @@ public class UserService {
 
     public UserResponseDto createUser(UserRequestDto dto) {
         User user = userMapper.toUser(dto);
-        repository.save(user);
+        User savedUser = repository.save(user);
 
         //map user to UserResponseDto
-        return userMapper.toResponseDto(user);
+        return userMapper.toResponseDto(savedUser);
     }
 
     public List<UserResponseDto> getAllUsers() {
@@ -41,9 +40,9 @@ public class UserService {
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
 
-        repository.save(user);
+        User savedUser = repository.save(user);
 
-        return userMapper.toResponseDto(user);
+        return userMapper.toResponseDto(savedUser);
     }
 
     public void deleteUser(Long id){
