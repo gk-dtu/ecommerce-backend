@@ -4,6 +4,7 @@ import com.aviraj.ecommerce.product.dto.ProductRequestDto;
 import com.aviraj.ecommerce.product.dto.ProductResponseDto;
 import com.aviraj.ecommerce.product.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +25,16 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponseDto> getAllProducts() {
-        return service.getAllProducts();
+    public Page<ProductResponseDto> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        return service.getAllProducts(page, size);
     }
+
+//    @GetMapping
+//    public List<ProductResponseDto> getAllProducts() {
+//        return service.getAllProducts();
+//    }
 
     @GetMapping("/{id}")
     public ProductResponseDto getById(@Valid @PathVariable Long id) {

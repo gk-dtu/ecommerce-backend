@@ -8,6 +8,10 @@ import com.aviraj.ecommerce.product.repository.ProductRepository;
 import com.aviraj.ecommerce.user.entity.User;
 import com.aviraj.ecommerce.user.repository.UserRepository;
 import com.aviraj.ecommerce.product.mapper.ProductMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +43,15 @@ public class ProductService {
 
     public List<ProductResponseDto> getAllProducts(){
         return productMapper.toProductResponseDto(productRepo.findAll());
+    }
+
+    public Page<ProductResponseDto> getAllProducts(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("price").descending());
+
+        Page<Product> productPage = productRepo.findAll(pageable);
+
+        return productPage.map(productMapper::toProductResponseDto);
     }
 
     public ProductResponseDto getById(Long id){
