@@ -10,8 +10,10 @@ public class ProductRequestDto {
     private String name;
 
     @NotNull(message = "price cannot be Null")
+    @Positive
     private double price;
 
     @NotNull(message = "user_id cannot be Null")
+    @Positive
     private Long userId;
 }

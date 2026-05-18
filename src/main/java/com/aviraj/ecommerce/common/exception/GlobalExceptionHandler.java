@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice //registered globally for all controllers, centralized error handling
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({UserNotFoundException.class, ProductNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleUserNotFound(UserNotFoundException ex) {
         return new ErrorResponse(

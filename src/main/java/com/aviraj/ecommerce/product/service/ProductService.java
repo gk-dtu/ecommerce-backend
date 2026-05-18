@@ -1,5 +1,6 @@
 package com.aviraj.ecommerce.product.service;
 
+import com.aviraj.ecommerce.common.exception.ProductNotFoundException;
 import com.aviraj.ecommerce.common.exception.UserNotFoundException;
 import com.aviraj.ecommerce.product.dto.ProductRequestDto;
 import com.aviraj.ecommerce.product.dto.ProductResponseDto;
@@ -56,13 +57,13 @@ public class ProductService {
 
     public ProductResponseDto getById(Long id){
         Product product =  productRepo.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
         return productMapper.toProductResponseDto(product);
     }
 
     public void deleteProduct(Long id){
         Product product =  productRepo.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Product not found, can't delete"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found, can't delete"));
         productRepo.delete(product);
     }
 
