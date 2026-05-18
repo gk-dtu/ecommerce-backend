@@ -65,4 +65,13 @@ public class ProductService {
                 .orElseThrow(() -> new UserNotFoundException("Product not found, can't delete"));
         productRepo.delete(product);
     }
+
+    public List<ProductResponseDto> searchProducts(String keyword) {
+
+        return productRepo
+                .findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(productMapper::toProductResponseDto)
+                .toList();
+    }
 }

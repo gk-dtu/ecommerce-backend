@@ -31,6 +31,11 @@ public class ProductController {
         return service.getAllProducts(page, size);
     }
 
+    @GetMapping("/search")
+    public List<ProductResponseDto> searchProducts(@RequestParam String keyword) {
+        return service.searchProducts(keyword);
+    }
+
 //    @GetMapping
 //    public List<ProductResponseDto> getAllProducts() {
 //        return service.getAllProducts();
