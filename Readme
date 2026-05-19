@@ -1,0 +1,136 @@
+🛒 E-commerce Backend (Monolithic Architecture)
+
+🚀 Overview
+
+This project is a production-ready Spring Boot monolithic backend for an e-commerce system.
+It demonstrates backend engineering concepts from basic CRUD to scalable API design.
+
+---
+
+🧠 Key Features
+
+👤 User Management
+
+- Create, fetch, and delete users
+- DTO-based request/response handling
+- Validation support
+
+📦 Product Management
+
+- Create products linked to users (seller concept)
+- Pagination & sorting support
+- Search/filter products by name
+
+🛍️ Order Management
+
+- Place orders with user & product
+- Server-side total price calculation (secure design)
+- Transactional consistency
+
+---
+
+🏗️ Architecture
+
+Feature-based (modular monolith):
+
+com.aviraj.ecommerce
+│
+├── user/
+├── product/
+├── order/
+├── common/
+│   ├── exception/
+│   ├── response/
+
+Why this structure?
+
+- Easy to scale
+- Microservice-ready
+- Clean separation of concerns
+
+---
+
+⚙️ Tech Stack
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- H2 Database
+- Maven
+
+---
+
+🔥 Advanced Concepts Implemented
+
+- DTO Pattern (Request/Response separation)
+- Global Exception Handling
+- Validation ("@Valid", "@NotNull", etc.)
+- Pagination & Sorting ("Pageable")
+- Filtering using JPA methods
+- Logging using SLF4J
+- Transaction Management ("@Transactional")
+- Standard API Response Wrapper
+
+---
+
+📡 API Examples
+
+Create Product
+
+POST "/products"
+
+{
+  "name": "Laptop",
+  "price": 75000,
+  "userId": 1
+}
+
+---
+
+Get Products (Pagination)
+
+GET "/products?page=0&size=5"
+
+---
+
+Search Products
+
+GET "/products/search?keyword=laptop"
+
+---
+
+Place Order
+
+POST "/orders"
+
+{
+  "userId": 1,
+  "productId": 1,
+  "quantity": 2
+}
+
+---
+
+🧠 Design Decisions
+
+- Used double for price (temporary) → will be replaced with BigDecimal in future
+- User acts as both buyer and seller
+- Backend calculates price → avoids client-side manipulation
+
+---
+
+🚀 Future Enhancements
+
+- Microservices architecture
+- Inter-service communication (REST/Feign)
+- API Gateway
+- Service discovery
+- Distributed transactions
+- Authentication & Authorization
+
+---
+
+📌 Author
+
+Aviraj
+Backend Developer | Java | Spring Boot
