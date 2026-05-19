@@ -1,5 +1,6 @@
 package com.aviraj.ecommerce.user.controller;
 
+import com.aviraj.ecommerce.common.response.ApiResponse;
 import com.aviraj.ecommerce.user.dto.UserRequestDto;
 import com.aviraj.ecommerce.user.dto.UserResponseDto;
 import com.aviraj.ecommerce.user.service.UserService;
@@ -19,8 +20,9 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponseDto createUser(@Valid @RequestBody UserRequestDto dto) {
-        return service.createUser(dto);
+    public ApiResponse<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto dto) {
+        UserResponseDto response =  service.createUser(dto);
+        return new ApiResponse<>(true, "User created", response);
     }
 
     @GetMapping
@@ -29,12 +31,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserResponseDto updateUser(@Valid @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
-        return service.updateUser(id, dto);
+    public ApiResponse<UserResponseDto> updateUser(@Valid @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
+        UserResponseDto response = service.updateUser(id, dto);
+        return new ApiResponse<>(true, "User updated success", response);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id){
+    public String deleteUser(@Valid @PathVariable Long id){
         service.deleteUser(id);
         return "User deleted successfully";
     }

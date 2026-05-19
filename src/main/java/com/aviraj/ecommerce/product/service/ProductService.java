@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -24,6 +26,8 @@ public class ProductService {
     private final ProductRepository productRepo;
     private final UserRepository userRepo;
     private final ProductMapper productMapper;
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
 
     public ProductService(ProductRepository productRepo, UserRepository userRepo, ProductMapper productMapper) {
         this.productRepo = productRepo;
@@ -33,13 +37,18 @@ public class ProductService {
 
     public ProductResponseDto createProduct(ProductRequestDto dto) {
 
+        logger.info("Creating product for userId: {}", dto.getUserId());
         User user = userRepo.findById(dto.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> {
+                    logger.error("User not found with id: {}", dto.getUserId());
+                    return new UserNotFoundException("User not found");
+                });
 
         Product product = productMapper.toProduct(dto, user);
-        Product saveProduct = productRepo.save(product);
+        Product savedProduct = productRepo.save(product);
 
-        return productMapper.toProductResponseDto(saveProduct);
+        logger.info("Product created with id: {}", savedProduct.getId());
+        return productMapper.toProductResponseDto(savedProduct);
     }
 
     public List<ProductResponseDto> getAllProducts(){
@@ -57,13 +66,21 @@ public class ProductService {
 
     public ProductResponseDto getById(Long id){
         Product product =  productRepo.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                .orElseThrow(() -> {
+                    logger.info("Product not found with id: {}", id);
+                    return new ProductNotFoundException("Product not found with id: " + id);
+                });
+        logger.info("Product found with id: {}", id);
         return productMapper.toProductResponseDto(product);
     }
 
     public void deleteProduct(Long id){
         Product product =  productRepo.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found, can't delete"));
+                .orElseThrow(() -> {
+                    logger.info("Product not found with id: {} can't delete", id);
+                    return new ProductNotFoundException("Product not found, can't delete");
+                });
+        logger.info("Product deleted successfully with id: {}", id);
         productRepo.delete(product);
     }
 

@@ -1,5 +1,6 @@
 package com.aviraj.ecommerce.product.controller;
 
+import com.aviraj.ecommerce.common.response.ApiResponse;
 import com.aviraj.ecommerce.product.dto.ProductRequestDto;
 import com.aviraj.ecommerce.product.dto.ProductResponseDto;
 import com.aviraj.ecommerce.product.service.ProductService;
@@ -20,19 +21,20 @@ public class ProductController {
     }
 
     @PostMapping
-    public ProductResponseDto createProduct(@Valid @RequestBody ProductRequestDto dto) {
-        return service.createProduct(dto);
+    public ApiResponse<ProductResponseDto> createProduct(@Valid @RequestBody ProductRequestDto dto) {
+        ProductResponseDto response = service.createProduct(dto);
+        return new ApiResponse<>(true, "Product created", response);
     }
 
     @GetMapping
     public Page<ProductResponseDto> getAllProducts(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
+            @Valid @RequestParam(defaultValue = "0") int page,
+            @Valid @RequestParam(defaultValue = "5") int size) {
         return service.getAllProducts(page, size);
     }
 
     @GetMapping("/search")
-    public List<ProductResponseDto> searchProducts(@RequestParam String keyword) {
+    public List<ProductResponseDto> searchProducts(@Valid @RequestParam String keyword) {
         return service.searchProducts(keyword);
     }
 

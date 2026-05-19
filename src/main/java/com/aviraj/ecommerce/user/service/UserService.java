@@ -6,6 +6,8 @@ import com.aviraj.ecommerce.user.entity.User;
 import com.aviraj.ecommerce.common.exception.UserNotFoundException;
 import com.aviraj.ecommerce.user.repository.UserRepository;
 import com.aviraj.ecommerce.user.mapper.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ public class UserService {
 
     private final UserRepository repository;
     private final UserMapper userMapper;
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository repository, UserMapper userMapper) {
         this.repository = repository;
@@ -22,9 +25,11 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserRequestDto dto) {
+        logger.info("creating user with name: {}", dto.getName());
         User user = userMapper.toUser(dto);
         User savedUser = repository.save(user);
 
+        logger.info("User created successfully with id: {}", savedUser.getId());
         //map user to UserResponseDto
         return userMapper.toResponseDto(savedUser);
     }
@@ -35,20 +40,27 @@ public class UserService {
 
     public UserResponseDto updateUser(Long id, UserRequestDto updatedUser) {
         User user = repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found, can't update"));
+                .orElseThrow(() -> {
+                    logger.error("User not found with id: {}", id);
+                    return new UserNotFoundException("User not found, can't update");
+                });
 
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
 
         User savedUser = repository.save(user);
 
+        logger.info("User updated successfully with id: {}",savedUser.getId());
         return userMapper.toResponseDto(savedUser);
     }
 
     public void deleteUser(Long id){
         User user = repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found, can't delete"));
-
+                .orElseThrow(() -> {
+                    logger.error("User not found with id: {} can't delete", id);
+                    return new UserNotFoundException("User not found, can't delete");
+                });
+        logger.info("User deleted successfully with id: {}", id);
         repository.delete(user);
     }
 
