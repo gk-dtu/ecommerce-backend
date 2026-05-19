@@ -11,6 +11,7 @@ import com.aviraj.ecommerce.product.entity.Product;
 import com.aviraj.ecommerce.product.repository.ProductRepository;
 import com.aviraj.ecommerce.user.entity.User;
 import com.aviraj.ecommerce.user.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class OrderService {
         this.orderMapper = orderMapper;
     }
 
+    @Transactional
     public OrderResponseDto placeOrder(OrderRequestDto dto) {
         logger.info("placing order with User id: {} and product id: {}", dto.getUserId(), dto.getProductId());
         User user = userRepo.findById(dto.getUserId())
